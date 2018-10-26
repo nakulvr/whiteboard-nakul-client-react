@@ -1,0 +1,10 @@
+.grey {
+    background: #d3d1d391;
+}
+
+.colored-block {
+    width: 100%;
+    padding: 0px 0px;
+    color: #000;
+    /*background: #ffffff;*/
+}

@@ -1,0 +1,222 @@
+[
+  {
+    "id": "123",
+    "title": "CS5610",
+    "modules": [
+      {
+        "moduleId": "123_1",
+        "title": "Week 1",
+        "lessons": [
+          {
+            "lessonId": "123_1_1",
+            "title": "HTML",
+            "topics": [
+              {
+                "id": "123_1_1_1",
+                "title": "DOM",
+                "widgets": [
+                  {
+                    "id": "123_1_1_1_1",
+                    "title": "widget 1",
+                    "type": "HEADING",
+                    "size": "4",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_1_1_2",
+                    "title": "widget 2",
+                    "type": "PARAGRAPH",
+                    "text": "This topic introduces the DOM"
+                  },
+                  {
+                    "id": "123_1_1_1_3",
+                    "title": "widget 3",
+                    "type": "LIST",
+                    "items": "Nodes,Attributes,Tag names,IDs,Styles,Classes"
+                  },
+                  {
+                    "id": "123_1_1_1_4",
+                    "title": "widget 4",
+                    "type": "IMAGE",
+                    "src": "https://loremflickr.com/g/320/240/paris"
+                  },
+                  {
+                    "id": "123_1_1_1_5",
+                    "type": "LINK",
+                    "title": "The DOM",
+                    "href": "https://en.wikipedia.org/wiki/Document_Object_Model"
+                  }
+                ]
+              },
+              {
+                "id": "123_1_1_2",
+                "title": "Tags",
+                "widgets": [
+                  {
+                    "id": "123_1_1_2_1",
+                    "title": "widget 10",
+                    "type": "HEADING",
+                    "size": "2",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_1_2_2",
+                    "title": "widget 20",
+                    "type": "HEADING",
+                    "size": "3",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_1_2_3",
+                    "title": "widget 30",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  }
+                ]
+              },
+              {
+                "id": "123_1_1_3",
+                "title": "Attributes",
+                "widgets": [
+                  {
+                    "id": "123_1_1_3_1",
+                    "title": "widget 11",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_1_3_2",
+                    "title": "widget 12",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_1_3_3",
+                    "title": "widget 13",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "lessonId": "123_1_2",
+            "title": "CSS",
+            "topics": [
+              {
+                "id": "123_1_2_1",
+                "title": "Attributes",
+                "widgets": [
+                  {
+                    "id": "123_1_2_1_1",
+                    "title": "widget 31",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_2_1_2",
+                    "title": "widget 32",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  },
+                  {
+                    "id": "123_1_2_1_3",
+                    "title": "widget 33",
+                    "type": "HEADING",
+                    "size": "1",
+                    "text": "The Document Object Model"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "moduleId": "123_2",
+        "title": "Week 2",
+        "lessons": [{
+          "lessonId": "123_2_1",
+          "title": "React",
+          "topics":[
+            {
+              "id": "123_2_1_1",
+              "title": "React DOM",
+              "widgets": [
+                {
+                  "id": "123_2_1_1_1",
+                  "title": "widget 41",
+                  "type": "HEADING",
+                  "size": 1,
+                  "text": "The Document Object Model"
+                },
+                {
+                  "id": "123_2_1_1_2",
+                  "title": "widget 42",
+                  "type": "HEADING",
+                  "size": 1,
+                  "text": "The Document Object Model"
+                },
+                {
+                  "id": "123_2_1_1_3",
+                  "title": "widget 43",
+                  "type": "HEADING",
+                  "size": 1,
+                  "text": "The Document Object Model"
+                }
+              ]
+            }
+          ]
+        }]
+      }
+    ]
+  },
+  {
+    "id": "234",
+    "title": "CS5200",
+    "modules": [{
+      "moduleId": "234_1",
+      "title": "New Module",
+      "lessons":[{
+        "lessonId": "234_1_1",
+        "title": "New title",
+        "topics": [
+          {
+            "id": "234_1_1_1",
+            "title": "New title",
+            "widgets": [
+              {
+                "id": "234_1_1_1_1",
+                "title": "widget 51",
+                "type": "HEADING",
+                "size": 1,
+                "text": "The Document Object Model"
+              },
+              {
+                "id": "234_1_1_1_2",
+                "title": "widget 52",
+                "type": "HEADING",
+                "size": 1,
+                "text": "The Document Object Model"
+              },
+              {
+                "id": "234_1_1_1_3",
+                "title": "widget 53",
+                "type": "HEADING",
+                "size": 1,
+                "text": "The Document Object Model"
+              }
+            ]
+          }
+        ]
+      }]
+    }]
+  }
+]

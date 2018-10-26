@@ -1,0 +1,41 @@
+.widget-header {
+    /*margin-right: 320px;*/
+    /*position: static;*/
+    margin: 0 auto; width: 475px
+}
+
+.widget-header2 {
+    margin-right: 300px;
+}
+
+.widget-header3 {
+    margin-right: 370px;
+}
+
+.widget-header4 {
+    margin-right: 340px;
+}
+
+.widget-header5{
+    margin-right: 365px;
+}
+
+.widget-top {
+    margin-top: 60px;
+}
+
+.footer {
+    position: fixed;
+    left: 95%;
+    bottom: 5%;
+    width: 10%;
+}
+
+table tbody tr:first-child #moveUp {
+    display: none;
+}
+
+table tbody tr:last-child #moveDown {
+    display: none;
+}
+

@@ -1,12 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+// import HelloWorld from './components/HelloWorld'
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import WhiteBoard from './components/WhiteBoard'
+import '../node_modules/font-awesome/css/font-awesome.min.css';
+// import CourseService from "./services/CourseService";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThLarge, faBars, faListUl, faFileAlt, faEdit, faTrashAlt, faEye, faArrowAltCircleUp,
+    faArrowAltCircleDown, faTimesCircle, faPlusCircle, faPlusSquare, faArrowUp, faArrowDown, faTimes}
+    from '@fortawesome/free-solid-svg-icons'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+library.add(faThLarge, faBars, faListUl, faFileAlt, faEdit, faTrashAlt, faEye, faArrowAltCircleUp, faArrowAltCircleDown,
+    faTimesCircle, faPlusCircle, faPlusSquare, faArrowUp, faArrowDown, faTimes);
+
+ReactDOM.render(
+    /*<h1>Hello World!</h1>,*/
+    <div className="container-fluid">
+        <WhiteBoard/>
+    </div>,
+    document.getElementById("root")
+);

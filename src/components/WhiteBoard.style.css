@@ -1,0 +1,19 @@
+.wd-plus-sign {
+    color: red;
+}
+
+.white {
+    color: white;
+}
+
+.wd-bottom-right {
+    color: red;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
