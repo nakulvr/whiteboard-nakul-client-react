@@ -3,13 +3,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidgetDown, checked}) => {
     let text;
-    let size = widget.size;
+    let size = "1";
     let widgetType;
     let widgetName = widget.name;
 
     return (<div
             className="card mt-3 mb-3"
         >
+
             {!checked &&
             <div className="card-header">
                 <span className="nav">
@@ -68,14 +69,18 @@ const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWi
                         <input className="col-lg-12 form-control px-1"
                             placeholder="Heading text"
                             onChange={() => {
-                            widget.text = text.value;
+                                widget.text = text.value;
+                                if(!widget.size){
+                                    widget.size = '1'
+                                }
                             updateWidget(widget)}}
                             ref={node => text = node}
                             value={widget.text}/>
                         <label htmlFor="size" className="mt-2">Heading Size</label>
                         <select className="col-lg-12 form-control px-1"
                         onChange={()=>{
-                        widget.size=size.value;
+                            // console.log(size.value);
+                            widget.size=size.value;
                         updateWidget(widget)}}
                         ref={node => size = node} id='size'
                         value={widget.size}

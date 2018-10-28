@@ -23,11 +23,11 @@ export default class LessonTab extends React.Component {
 
                 <span
                    className={this.props.selected? "nav-link active" : "nav-link"}>
-                    <a
+                    <span
                        onClick={() => this.props.selectLesson(this.props.lesson)}
                        className='text-dark'>
                     {this.props.lesson.title}
-                    </a>
+                    </span>
                     <span
                         onClick={() => {
                             this.props.deleteLesson(this.props.lesson);

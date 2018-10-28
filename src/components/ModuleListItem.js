@@ -54,8 +54,7 @@ export default class ModuleListItem extends React.Component{
                 // onClick={() => selectModule(module)}
             >
                 <span onClick={() => this.props.selectModule(this.props.module)}
-                   className={this.props.selected ? 'text-light' : 'text-dark'}
-                   role="button" tabIndex="0">
+                   className={this.props.selected ? 'text-light' : 'text-dark'}>
                 {this.props.module.title}
                 </span>
 

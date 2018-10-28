@@ -15,11 +15,16 @@ import CourseEditor from "./CourseEditor";
 export default class WhiteBoard extends React.Component {
     constructor(props){
         super(props);
-        // this.courseService = new CourseService();
         this.state = {
             // courses: this.courseService.findAllCourses()
-            courses : CourseServiceSingleton.findAllCourses()
+            courses : []
         }
+    }
+
+    componentDidMount() {
+        CourseServiceSingleton.findAllCourses2(this.props.userId).then(courses => this.setState({
+            courses : courses
+        }));
     }
 
     addCourse = newCourse => {
@@ -125,19 +130,19 @@ export default class WhiteBoard extends React.Component {
         return(
           <div>
               {/*<h1>WhiteBoard ({this.state.courses.length})</h1>*/}
-              <nav className="navbar navbar-dark bg-primary">
-                  <FontAwesomeIcon icon="bars" color="white"/>
-                  <a className="navbar-brand justify-content-center" href="../../public/index.html">Course Manager</a>
-                  <form className="form-inline">
-                      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                          {/*<button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>*/}
-                      {/*<span className="fa-layers fa-fw">*/}
-                          {/*<FontAwesomeIcon icon={faCircle} size='2x' color="red"/>*/}
-                          {/*<FontAwesomeIcon icon={faPlus} size='2x' inverse={true}/>*/}
-                      {/*</span>*/}
-                      <FontAwesomeIcon icon="plus-circle" size='2x' inverse={true}/>
-                  </form>
-              </nav>
+              {/*<nav className="navbar navbar-dark bg-primary">*/}
+                  {/*<FontAwesomeIcon icon="bars" color="white"/>*/}
+                  {/*<a className="navbar-brand justify-content-center" href="../../public/index.html">Course Manager</a>*/}
+                  {/*<form className="form-inline">*/}
+                      {/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>*/}
+                          {/*/!*<button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>*!/*/}
+                      {/*/!*<span className="fa-layers fa-fw">*!/*/}
+                          {/*/!*<FontAwesomeIcon icon={faCircle} size='2x' color="red"/>*!/*/}
+                          {/*/!*<FontAwesomeIcon icon={faPlus} size='2x' inverse={true}/>*!/*/}
+                      {/*/!*</span>*!/*/}
+                      {/*<FontAwesomeIcon icon="plus-circle" size='2x' inverse={true}/>*/}
+                  {/*</form>*/}
+              {/*</nav>*/}
               {/*<CourseTable courses={this.state.courses}/>*/}
               <Router>
                   <div>

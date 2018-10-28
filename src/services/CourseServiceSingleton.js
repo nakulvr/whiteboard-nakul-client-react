@@ -1,10 +1,15 @@
 // let courses = fetch("../courses.json")
 //     .then(response => response.json());
 let courses = require('../courses.json');
-
+let COURSE_API_URL = "http://localhost:8080/api/user/";
 export default class CourseServiceSingleton {
     static createCourse = course =>
         courses.push(course);
+
+    static findAllCourses2 = (userId) =>
+        fetch(COURSE_API_URL + userId + '/course')
+            .then(response => response.json());
+
     static findAllCourses = () =>
         courses;
     static findCourseById = courseId =>

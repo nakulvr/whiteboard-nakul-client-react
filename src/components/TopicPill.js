@@ -22,7 +22,7 @@ export default class TopicPill extends React.Component {
         return (
             <span
               className={this.props.selected? "badge badge-pill badge-primary mx-1 my-3" : "badge badge-pill badge-secondary mx-1 my-3"}>
-                <span role="button" tabIndex="0"
+                <span
                    onClick={() => this.props.selectTopic(this.props.topic)}
                    className={this.props.selected ? 'text-white' : 'text-light'}>
                     {this.props.topic.title}

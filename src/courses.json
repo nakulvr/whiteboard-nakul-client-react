@@ -154,21 +154,21 @@
                   "id": "123_2_1_1_1",
                   "title": "widget 41",
                   "type": "HEADING",
-                  "size": 1,
+                  "size": "1",
                   "text": "The Document Object Model"
                 },
                 {
                   "id": "123_2_1_1_2",
                   "title": "widget 42",
                   "type": "HEADING",
-                  "size": 1,
+                  "size": "1",
                   "text": "The Document Object Model"
                 },
                 {
                   "id": "123_2_1_1_3",
                   "title": "widget 43",
                   "type": "HEADING",
-                  "size": 1,
+                  "size": "1",
                   "text": "The Document Object Model"
                 }
               ]
@@ -196,21 +196,21 @@
                 "id": "234_1_1_1_1",
                 "title": "widget 51",
                 "type": "HEADING",
-                "size": 1,
+                "size": "1",
                 "text": "The Document Object Model"
               },
               {
                 "id": "234_1_1_1_2",
                 "title": "widget 52",
                 "type": "HEADING",
-                "size": 1,
+                "size": "1",
                 "text": "The Document Object Model"
               },
               {
                 "id": "234_1_1_1_3",
                 "title": "widget 53",
                 "type": "HEADING",
-                "size": 1,
+                "size": "1",
                 "text": "The Document Object Model"
               }
             ]
