@@ -128,7 +128,7 @@ export default class ModuleList extends React.Component {
                      {
                         this.props.modules.map((module, index) =>
                             <ModuleListItem
-                                selected={this.props.selectedModule === module}
+                                selected={this.props.selectedModule.id === module.id}
                                 selectModule={this.props.selectModule}
                                 selectDefault={this.props.selectDefault}
                                 deleteModule={this.props.deleteModule}

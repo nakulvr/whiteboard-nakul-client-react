@@ -23,7 +23,7 @@ export default class TopicPills extends React.Component {
                     {
                         this.props.topics.map((topic, index) =>
                         <TopicPill
-                            selected={this.props.selectedTopic === topic}
+                            selected={this.props.selectedTopic.id === topic.id}
                             selectTopic={this.props.selectTopic}
                             selectedLesson={this.props.selectedLesson}
                             selectedModule={this.props.selectedModule}

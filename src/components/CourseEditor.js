@@ -27,11 +27,15 @@ export default class CourseEditor extends Component {
         const selectedModule = course.modules[0];
         const selectedLesson = selectedModule.lessons[0];
         const selectedTopic = selectedLesson.topics[0];
+        const currentModule =  course.modules[0];
+        const currentLesson = currentModule.lessons[0];
         this.state = {
             course: course,
             selectedModule: selectedModule,
             selectedLesson: selectedLesson,
             selectedTopic: selectedTopic,
+            currentModule: currentModule,
+            currentLesson: currentLesson,
             checked: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -39,23 +43,69 @@ export default class CourseEditor extends Component {
 
     componentDidUpdate(prevProps) {
         if(prevProps.courses !== this.props.courses) {
+            // console.log(this.state);
             const courseId = this.props.match.params.courseId;
             const course = this.props.courses.find(
                 course => course.id.toString() === courseId);
             if (course.hasOwnProperty('modules')) {
-                if(course.modules.length !==0) {
-                    const selectedModule = course.modules[0];
-                    const selectedLesson = selectedModule.lessons[0];
-                    const selectedTopic = selectedLesson.topics[0];
-                    this.setState((previousState) => {
-                        // console.log(previousState);
-                    return {
-                        course: course,
-                        selectedModule: selectedModule,
-                        selectedLesson: selectedLesson,
-                        selectedTopic: selectedTopic
-                    }
-                })
+                // console.log(this.state);
+                if(course.modules.length !== 0) {
+                    // let currentModule = course.modules
+                    //     .find(module => module.id === this.state.selectedModule.id);
+                    // if(currentModule) {
+                    //     if (currentModule.lessons.length !== 0) {
+                            this.setState((previousState) => {
+                                let selectedModule = previousState.selectedModule;
+                                let selectedLesson = previousState.selectedLesson;
+                                let selectedTopic = previousState.selectedTopic;
+                                // console.log(previousState);
+                                let currentModule = course.modules
+                                    .find(module => module.id === previousState.selectedModule.id);
+
+                                if (!currentModule) {
+                                    currentModule = course.modules[0];
+                                    selectedModule = course.modules[0];
+                                    if(selectedModule.lessons.length !== 0) {
+                                        selectedLesson = selectedModule.lessons[0];
+                                        if(selectedLesson.topics.length !== 0)
+                                            selectedTopic = selectedLesson.topics[0];
+                                    }
+                                }
+
+                                let currentLesson = currentModule.lessons
+                                    .find(lesson => lesson.id === previousState.selectedLesson.id);
+
+                                if (!currentLesson) {
+                                    // if(currentModule.lessons.length !== 0) {
+                                        currentLesson = currentModule.lessons[0];
+                                        selectedLesson = currentModule.lessons[0];
+                                        // if(selectedLesson.topics.length !== 0)
+                                            selectedTopic = selectedLesson.topics[0];
+                                }
+                                // }
+                                var currentTopic = currentLesson.topics
+                                    .find(topic => topic.id === previousState.selectedTopic.id);
+
+                                if (!currentTopic) {
+                                    selectedTopic = selectedLesson.topics[0];
+                                }
+                                // console.log(this.state.selectedModule);
+                                // console.log(currentModule);
+                                return {
+                                    course: course,
+                                    selectedModule: selectedModule,
+                                    selectedLesson: selectedLesson,
+                                    selectedTopic: selectedTopic,
+                                    currentModule: currentModule,
+                                    currentLesson: currentLesson
+                                }
+                            });
+                        // }
+                        // else {
+                        //     this.props.addLesson(course.id, currentModule.id, '');
+                        // }
+                    // }
+                    // console.log(this.state);
                 }
                 else{
                     this.props.addModule(course.id, '');
@@ -149,13 +199,16 @@ export default class CourseEditor extends Component {
     selectLesson = lesson =>
         this.setState({
             selectedLesson: lesson,
+            currentLesson: lesson,
             selectedTopic: lesson.topics[0]
         });
 
     selectModule = module =>
         this.setState({
             selectedModule: module,
+            currentModule: module,
             selectedLesson: module.lessons[0],
+            currentLesson: module.lessons[0],
             selectedTopic: module.lessons[0].topics[0]
         });
 
@@ -190,10 +243,11 @@ export default class CourseEditor extends Component {
                     </div>
                     <div className="col-8">
                         <LessonTabs
+                            selectModule={this.selectModule}
                             selectLesson={this.selectLesson}
                             selectedLesson={this.state.selectedLesson}
                             selectedModule={this.state.selectedModule}
-                            lessons={this.state.selectedModule.lessons}
+                            lessons={this.state.currentModule.lessons}
                             addLesson={this.props.addLesson}
                             deleteLesson={this.props.deleteLesson}
                             selectDefaultLesson={this.selectDefaultLesson}
@@ -205,7 +259,7 @@ export default class CourseEditor extends Component {
                             selectedLesson={this.state.selectedLesson}
                             selectedModule={this.state.selectedModule}
                             selectedTopic={this.state.selectedTopic}
-                            topics={this.state.selectedLesson.topics}
+                            topics={this.state.currentLesson.topics}
                             lesson={this.state.selectedLesson}
                             addTopic={this.props.addTopic}
                             deleteTopic={this.props.deleteTopic}

@@ -17,6 +17,7 @@ export default class LessonTab extends React.Component {
             })
         )
     };
+
     render() {
         return (
             <li className="nav-item">
