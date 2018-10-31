@@ -60,14 +60,17 @@ export default class HomePage extends Component {
                                         this.profileToggle();
                                     }
                                     }>Profile</button>
-                            <button type="button"
-                                    className="btn btn-primary btn-lg mx-2"
-                                    onClick={() => {
-                                        UserServiceSingleton.userLogout();
-                                        this.loginToggle();
-                                        this.whiteBoardToggle();
-                                        }
-                                    }>Logout</button>
+                            <a href="../../public/index.html">
+                                <button type="button"
+                                        className="btn btn-primary btn-lg mx-2"
+                                        onClick={() => {
+                                            UserServiceSingleton.userLogout();
+                                            // this.loginToggle();
+                                            // this.whiteBoardToggle();
+                                            }
+                                        }>Logout
+                                </button>
+                            </a>
                         </span>}
                     {!this.state.showWhiteBoard && !this.state.showProfile && <FontAwesomeIcon icon="bars" color="white"/>}
                     <a className="navbar-brand justify-content-center" href="../../public/index.html">Course Manager</a>

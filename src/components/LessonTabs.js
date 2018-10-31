@@ -42,7 +42,7 @@ export default class LessonTabs extends React.Component{
                         />
                             <button className="btn btn-outline-primary my-sm-0"
                                     onClick={() => this.props.addLesson(this.props.course.id,
-                                        this.props.selectedModule.moduleId, this.state.newLessonTitle)}>
+                                        this.props.selectedModule.id, this.state.newLessonTitle)}>
                                 Add
                             </button>
                     </span>

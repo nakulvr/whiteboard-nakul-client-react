@@ -35,7 +35,8 @@ const CourseTable = ({courses, addCourse, deleteCourse}) =>
                 </tr>
             </thead>
             <tbody>
-            { courses.map((course, key) =>
+            {/*{console.log(courses)}*/}
+            {courses.map((course, key) =>
                 <CourseRow course={course} key={key} deleteCourse={deleteCourse}/>
             )}
             </tbody>

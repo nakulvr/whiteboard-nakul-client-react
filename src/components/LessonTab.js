@@ -30,8 +30,10 @@ export default class LessonTab extends React.Component {
                     </span>
                     <span
                         onClick={() => {
-                            this.props.deleteLesson(this.props.lesson);
-                            this.props.selectDefaultLesson();
+                            this.props.deleteLesson(this.props.course.id,
+                                this.props.selectedModule.id,
+                                this.props.lesson);
+                            // this.props.selectDefaultLesson();
                             }
                         }
                         className="float-right"

@@ -105,7 +105,7 @@ export default class Profile extends Component {
                             <button type="button"
                                     className="btn btn-success mx-auto"
                                     onClick={() => {
-                                        // UserServiceSingleton.userRegister(this.state.user);
+                                        UserServiceSingleton.updateUserProfile(this.state.user);
                                         this.props.whiteBoardToggle();
                                         this.props.profileToggle();                                    }
                                     }>Save</button>

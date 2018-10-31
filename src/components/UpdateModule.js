@@ -1,5 +1,4 @@
 import React from 'react'
-
 export default class UpdateModule extends React.Component{
     constructor(props) {
         super(props);
@@ -33,7 +32,7 @@ export default class UpdateModule extends React.Component{
                         type="button"
                         onClick={() => {
                             this.props.updateModuleTitle(this.props.course.id,
-                                this.props.module.moduleId,
+                                this.props.module,
                                 this.state.updateModuleTitle);
                             this.props.updateToggle()
                             }

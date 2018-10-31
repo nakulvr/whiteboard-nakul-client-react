@@ -1,13 +1,9 @@
-let USER_LOGIN_API_URL = "http://localhost:8080/api/login";
-let USER_API_URL = "http://localhost:8080/api/user";
-let USER_LOGOUT_API_URL = "http://localhost:8080/api/logout";
-let USER_REGISTER_API_URL = "http://localhost:8080/api/register";
-let USER_PROFILE_API_URL = "http://localhost:8080/api/profile";
+let API_URL = "http://localhost:8080/api";
 
 export default class UserServiceSingleton {
 
     static userLogin = user => {
-        return (fetch(USER_LOGIN_API_URL, {
+        return (fetch(API_URL + '/login', {
             body: JSON.stringify(user),
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
@@ -20,14 +16,14 @@ export default class UserServiceSingleton {
     };
 
     static userLogout = () =>
-        fetch(USER_LOGOUT_API_URL, {
+        fetch(API_URL + '/logout', {
             headers : {'Content-Type': 'application/x-www-form-urlencoded'},
             credentials: 'include',
             method: 'POST'
         });
 
     static userRegister = (user) =>
-        fetch(USER_REGISTER_API_URL, {
+        fetch(API_URL + '/register', {
             body: JSON.stringify(user),
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
@@ -35,11 +31,19 @@ export default class UserServiceSingleton {
         });
 
     static getUserProfile = () =>
-        fetch(USER_PROFILE_API_URL, {
+        fetch(API_URL + '/profile', {
             credentials: 'include',
             method: 'GET'
         }).then(response => response.json());
 
+    static updateUserProfile = (user) =>
+        fetch(API_URL + '/profile', {
+            body: JSON.stringify(user),
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            method: 'PUT'
+        });
+
     static getUsers = () =>
-        fetch(USER_API_URL).then(response => response.json()).then(data => console.log(data))
+        fetch(API_URL + '/user').then(response => response.json()).then(data => console.log(data))
     }

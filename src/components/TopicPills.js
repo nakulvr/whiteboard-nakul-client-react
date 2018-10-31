@@ -25,6 +25,9 @@ export default class TopicPills extends React.Component {
                         <TopicPill
                             selected={this.props.selectedTopic === topic}
                             selectTopic={this.props.selectTopic}
+                            selectedLesson={this.props.selectedLesson}
+                            selectedModule={this.props.selectedModule}
+                            course={this.props.course}
                             topic={topic}
                             key={index}
                             deleteTopic={this.props.deleteTopic}
@@ -40,7 +43,9 @@ export default class TopicPills extends React.Component {
                                 aria-label="Search" onChange={this.formChanged}
                             />
                                 <button className="btn btn-outline-primary my-sm-0"
-                                    onClick={() => this.props.addTopic(this.props.lesson, this.state.newTopicTitle)}
+                                    onClick={() => this.props.addTopic(this.props.course.id,
+                                        this.props.selectedModule.id, this.props.selectedLesson.id,
+                                        this.state.newTopicTitle)}
                                 >
                                     Add
                                 </button>

@@ -34,8 +34,8 @@ export default class UpdateLesson extends React.Component {
                             type="button"
                             onClick={() => {
                                     this.props.updateLessonTitle(this.props.course.id,
-                                    this.props.selectedModule.moduleId,
-                                    this.props.lesson.lessonId,
+                                    this.props.selectedModule.id,
+                                    this.props.lesson,
                                     this.state.updateLessonTitle);
                                     this.props.updateToggle()
                                 }

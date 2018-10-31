@@ -1,8 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import UpdateModule from './UpdateModule'
-
-// /**
+// TODO: items below
 //  * @return {null}
 //  */
 // function UpdateField(props) {
@@ -65,8 +64,9 @@ export default class ModuleListItem extends React.Component{
                 {/*</span>*/}
                 <span
                     onClick={() => {
-                        this.props.deleteModule(this.props.module);
-                        this.props.selectDefault()
+                        this.props.deleteModule(this.props.course.id, this.props.module);
+                        //TODO: select default
+                        // this.props.selectDefault(this.props.course)
                         }
                     }
                     className="float-right"

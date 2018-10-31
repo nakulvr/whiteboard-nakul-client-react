@@ -29,8 +29,10 @@ export default class TopicPill extends React.Component {
                 </span>
                 <span
                     onClick={() => {
-                        this.props.deleteTopic(this.props.topic);
-                        this.props.selectDefaultTopic();
+                        this.props.deleteTopic(this.props.course.id,
+                            this.props.selectedModule.id, this.props.selectedLesson.id,
+                            this.props.topic);
+                        // this.props.selectDefaultTopic();
                       }
                     }
                     className="float-right"
@@ -52,6 +54,9 @@ export default class TopicPill extends React.Component {
                     updateTopicTitle={this.props.updateTopicTitle}
                     topic={this.props.topic}
                     updateToggle={this.updateToggle}
+                    selectedLesson={this.props.selectedLesson}
+                    selectedModule={this.props.selectedModule}
+                    course={this.props.course}
                 />
             </span>
         );

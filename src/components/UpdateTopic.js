@@ -33,7 +33,9 @@ export default class UpdateTopic extends React.Component {
                             className="btn btn-success"
                             type="button"
                             onClick={() => {
-                                this.props.updateTopicTitle(this.props.topic, this.state.updateTopicTitle);
+                                this.props.updateTopicTitle(this.props.course.id,
+                                    this.props.selectedModule.id, this.props.selectedLesson.id,
+                                    this.props.topic, this.state.updateTopicTitle);
                                 this.props.updateToggle()
                                 }
                             }

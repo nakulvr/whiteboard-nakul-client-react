@@ -11,7 +11,7 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import WidgetListContainer from '../containers/WidgetListContainer'
 // import ModuleListItem from "./ModuleListItem";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import CourseServiceSingleton from "../services/CourseServiceSingleton";
 
 const store = createStore(widgets);
@@ -21,8 +21,9 @@ export default class CourseEditor extends Component {
         super(props);
         const courseId = this.props.match.params.courseId;
         const course = this.props.courses.find(
-            course => course.id === courseId
-        );
+            course => course.id.toString() === courseId);
+        // console.log(course);
+        // console.log(course);
         const selectedModule = course.modules[0];
         const selectedLesson = selectedModule.lessons[0];
         const selectedTopic = selectedLesson.topics[0];
@@ -34,6 +35,33 @@ export default class CourseEditor extends Component {
             checked: false
         };
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.courses !== this.props.courses) {
+            const courseId = this.props.match.params.courseId;
+            const course = this.props.courses.find(
+                course => course.id.toString() === courseId);
+            if (course.hasOwnProperty('modules')) {
+                if(course.modules.length !==0) {
+                    const selectedModule = course.modules[0];
+                    const selectedLesson = selectedModule.lessons[0];
+                    const selectedTopic = selectedLesson.topics[0];
+                    this.setState((previousState) => {
+                        // console.log(previousState);
+                    return {
+                        course: course,
+                        selectedModule: selectedModule,
+                        selectedLesson: selectedLesson,
+                        selectedTopic: selectedTopic
+                    }
+                })
+                }
+                else{
+                    this.props.addModule(course.id, '');
+                }
+            }
+        }
     }
 
     handleChange(checked) {
@@ -84,11 +112,11 @@ export default class CourseEditor extends Component {
         )
     };
 
-    selectDefault = () => {
-        const courseId = this.props.match.params.courseId;
-        const course = this.props.courses.find(
-            course => course.id === courseId
-        );
+    selectDefault = (course) => {
+        // const courseId = this.props.match.params.courseId;
+        // const course = this.props.courses.find(
+        //     course => course.id === courseId
+        // );
         if(course.modules.length === 0) {
             course.modules = [{
                 moduleId: (new Date()).getTime() + '',
@@ -174,6 +202,8 @@ export default class CourseEditor extends Component {
                         />
                         <TopicPills
                             selectTopic={this.selectTopic}
+                            selectedLesson={this.state.selectedLesson}
+                            selectedModule={this.state.selectedModule}
                             selectedTopic={this.state.selectedTopic}
                             topics={this.state.selectedLesson.topics}
                             lesson={this.state.selectedLesson}
@@ -181,9 +211,10 @@ export default class CourseEditor extends Component {
                             deleteTopic={this.props.deleteTopic}
                             updateTopicTitle={this.props.updateTopicTitle}
                             selectDefaultTopic={this.selectDefaultTopic}
+                            course={this.state.course}
                         />
                         <div className="col-10">
-                            <span className="float-right mt-2">
+                            <span className="float-right mt-2 mb-5">
                                 {/*<Switcher />*/}
                                 <label htmlFor="normal-switch">
                                     <Switch
@@ -193,280 +224,279 @@ export default class CourseEditor extends Component {
                                     />
                                 </label>
                             </span>
-                            <h2 className="float-right mr-2"> Preview: </h2>
+                            <h2 className="float-right mr-2 mb-5"> Preview: </h2>
                             <span>
                                 <button type="button " className="btn btn-success float-right mx-2">Save</button>
                             </span>
-
                         </div>
-                        <div className="col-10 widget-top">
-                            <Provider store={store}>
-                                {/*<WidgetListContainer widgetsInit={this.state.selectedTopic.widgets}/>*/}
-                                <WidgetListContainer
-                                    // courseService = {this.props.courseService}
-                                    topic={this.state.selectedTopic}
-                                    checked={this.state.checked}
-                                    widgetsInit={this.state.selectedTopic.widgets}
-                                />
-                            </Provider>
-                            {/*<div className="card mt-3">*/}
-                                {/*<div className="card-header">*/}
-                                    {/*<span className="nav">*/}
-                                        {/*<h4 className="widget-header">*/}
-                                            {/*Heading widget*/}
-                                        {/*</h4>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="ml-2 float-right">*/}
-                                                {/*<select className="form-control mr-sm-2 float-right">*/}
-                                                    {/*<option value="HEADING">*/}
-                                                        {/*Heading*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LIST">*/}
-                                                        {/*List*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LINK">*/}
-                                                        {/*Link*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="IMAGE">*/}
-                                                        {/*Image*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="PARAGRAPH">*/}
-                                                        {/*Paragraph*/}
-                                                    {/*</option>*/}
-                                                {/*</select>*/}
-                                        {/*</span>*/}
-                                    {/*<span>*/}
-                                        {/*<FontAwesomeIcon icon="times-circle" color="red" size="2x"/>*/}
-                                    {/*</span>*/}
-                                    {/*</span>*/}
-                                {/*</div>*/}
-                                {/*<div className="card-body">*/}
-                                    {/*<input className="col-lg-12 form-control px-1"*/}
-                                           {/*placeholder="Heading text"/>*/}
-                                    {/*<select className="col-lg-12 form-control mt-2 px-1">*/}
-                                        {/*<option value="HEADING1">*/}
-                                            {/*Heading 1*/}
-                                        {/*</option>*/}
-                                        {/*<option value="HEADING2">*/}
-                                            {/*Heading 2*/}
-                                        {/*</option>*/}
-                                        {/*<option value="HEADING3">*/}
-                                            {/*Heading 3*/}
-                                        {/*</option>*/}
-                                    {/*</select>*/}
-                                    {/*<input className="col-lg-12 form-control mt-2 px-1"*/}
-                                           {/*placeholder="Widget Name"/>*/}
-                                    {/*<h5 className="card-title mt-2">Preview</h5>*/}
-                                    {/*<h3>Heading text</h3>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="card mt-3">*/}
-                                {/*<div className="card-header">*/}
-                                    {/*<span className="nav">*/}
-                                        {/*<h4 className="widget-header">*/}
-                                            {/*Paragraph widget*/}
-                                        {/*</h4>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="ml-2 float-right">*/}
-                                                {/*<select className="form-control mr-sm-2 float-right">*/}
-                                                    {/*<option value="HEADING">*/}
-                                                        {/*Heading*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LIST">*/}
-                                                        {/*List*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LINK">*/}
-                                                        {/*Link*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="IMAGE">*/}
-                                                        {/*Image*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="PARAGRAPH">*/}
-                                                        {/*Paragraph*/}
-                                                    {/*</option>*/}
-                                                {/*</select>*/}
-                                        {/*</span>*/}
-                                    {/*<span>*/}
-                                        {/*<FontAwesomeIcon icon="times-circle" color="red" size="2x"/>*/}
-                                    {/*</span>*/}
-                                    {/*</span>*/}
-                                {/*</div>*/}
-                                {/*<div className="card-body">*/}
-                                    {/*<textarea className="form-control col-lg-12" defaultValue="Lorem Ipsum"/>*/}
-                                    {/*<input className="col-lg-12 form-control mt-2 px-1"*/}
-                                           {/*placeholder="Widget Name"/>*/}
-                                        {/*<h5 className="card-title mt-2">Preview</h5>*/}
-                                        {/*<p className="card-text">Lorem Ipsum</p>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="card mt-3">*/}
-                                {/*<div className="card-header">*/}
-                                    {/*<span className="nav">*/}
-                                        {/*<h4 className="widget-header">*/}
-                                            {/*List widget*/}
-                                        {/*</h4>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="ml-2 float-right">*/}
-                                                {/*<select className="form-control mr-sm-2 float-right">*/}
-                                                    {/*<option value="HEADING">*/}
-                                                        {/*Heading*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LIST">*/}
-                                                        {/*List*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LINK">*/}
-                                                        {/*Link*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="IMAGE">*/}
-                                                        {/*Image*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="PARAGRAPH">*/}
-                                                        {/*Paragraph*/}
-                                                    {/*</option>*/}
-                                                {/*</select>*/}
-                                        {/*</span>*/}
-                                    {/*<span>*/}
-                                        {/*<FontAwesomeIcon icon="times-circle" color="red" size="2x"/>*/}
-                                    {/*</span>*/}
-                                    {/*</span>*/}
-                                {/*</div>*/}
-                                {/*<div className="card-body">*/}
-                    {/*<textarea className="form-control col-lg-12" defaultValue="Put each item in a separate row"/>*/}
+                        {/*<div className="col-10 widget-top">*/}
+                            {/*<Provider store={store}>*/}
+                                {/*/!*<WidgetListContainer widgetsInit={this.state.selectedTopic.widgets}/>*!/*/}
+                                {/*<WidgetListContainer*/}
+                                    {/*// courseService = {this.props.courseService}*/}
+                                    {/*topic={this.state.selectedTopic}*/}
+                                    {/*checked={this.state.checked}*/}
+                                    {/*widgetsInit={this.state.selectedTopic.widgets}*/}
+                                {/*/>*/}
+                            {/*</Provider>*/}
+                        {/*</div>*/}
+                            <div className="card first-widget">
+                                <div className="card-header">
+                                    <span className="nav">
+                                        <h4 className="widget-header">
+                                            Heading widget
+                                        </h4>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="ml-2 float-right">
+                                                <select className="form-control mr-sm-2 float-right">
+                                                    <option value="HEADING">
+                                                        Heading
+                                                    </option>
+                                                    <option value="LIST">
+                                                        List
+                                                    </option>
+                                                    <option value="LINK">
+                                                        Link
+                                                    </option>
+                                                    <option value="IMAGE">
+                                                        Image
+                                                    </option>
+                                                    <option value="PARAGRAPH">
+                                                        Paragraph
+                                                    </option>
+                                                </select>
+                                        </span>
+                                    <span>
+                                        <FontAwesomeIcon icon="times-circle" color="red" size="2x"/>
+                                    </span>
+                                    </span>
+                                </div>
+                                <div className="card-body">
+                                    <input className="col-lg-12 form-control px-1"
+                                           placeholder="Heading text"/>
+                                    <select className="col-lg-12 form-control mt-2 px-1">
+                                        <option value="HEADING1">
+                                            Heading 1
+                                        </option>
+                                        <option value="HEADING2">
+                                            Heading 2
+                                        </option>
+                                        <option value="HEADING3">
+                                            Heading 3
+                                        </option>
+                                    </select>
+                                    <input className="col-lg-12 form-control mt-2 px-1"
+                                           placeholder="Widget Name"/>
+                                    <h5 className="card-title mt-2">Preview</h5>
+                                    <h3>Heading text</h3>
+                                </div>
+                            </div>
+                            <div className="card mt-3">
+                                <div className="card-header">
+                                    <span className="nav">
+                                        <h4 className="widget-header">
+                                            Paragraph widget
+                                        </h4>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="ml-2 float-right">
+                                                <select className="form-control mr-sm-2 float-right">
+                                                    <option value="HEADING">
+                                                        Heading
+                                                    </option>
+                                                    <option value="LIST">
+                                                        List
+                                                    </option>
+                                                    <option value="LINK">
+                                                        Link
+                                                    </option>
+                                                    <option value="IMAGE">
+                                                        Image
+                                                    </option>
+                                                    <option value="PARAGRAPH">
+                                                        Paragraph
+                                                    </option>
+                                                </select>
+                                        </span>
+                                    <span>
+                                        <FontAwesomeIcon icon="times-circle" color="red" size="2x"/>
+                                    </span>
+                                    </span>
+                                </div>
+                                <div className="card-body">
+                                    <textarea className="form-control col-lg-12" defaultValue="Lorem Ipsum"/>
+                                    <input className="col-lg-12 form-control mt-2 px-1"
+                                           placeholder="Widget Name"/>
+                                        <h5 className="card-title mt-2">Preview</h5>
+                                        <p className="card-text">Lorem Ipsum</p>
+                                </div>
+                            </div>
+                            <div className="card mt-3">
+                                <div className="card-header">
+                                    <span className="nav">
+                                        <h4 className="widget-header">
+                                            List widget
+                                        </h4>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="ml-2 float-right">
+                                                <select className="form-control mr-sm-2 float-right">
+                                                    <option value="HEADING">
+                                                        Heading
+                                                    </option>
+                                                    <option value="LIST">
+                                                        List
+                                                    </option>
+                                                    <option value="LINK">
+                                                        Link
+                                                    </option>
+                                                    <option value="IMAGE">
+                                                        Image
+                                                    </option>
+                                                    <option value="PARAGRAPH">
+                                                        Paragraph
+                                                    </option>
+                                                </select>
+                                        </span>
+                                    <span>
+                                        <FontAwesomeIcon icon="times-circle" color="red" size="2x"/>
+                                    </span>
+                                    </span>
+                                </div>
+                                <div className="card-body">
+                    <textarea className="form-control col-lg-12" defaultValue="Put each item in a separate row"/>
 
-                                    {/*<select className="col-lg-12 form-control mt-2 px-1">*/}
-                                        {/*<option value="UN-ORL">*/}
-                                            {/*Unordered list*/}
-                                        {/*</option>*/}
-                                        {/*<option value="ORL">*/}
-                                            {/*Ordered list*/}
-                                        {/*</option>*/}
-                                    {/*</select>*/}
-                                    {/*<input className="col-lg-12 form-control mt-2 px-1"*/}
-                                           {/*placeholder="Widget Name"/>*/}
-                                        {/*<h5 className="card-title mt-2">Preview</h5>*/}
-                                        {/*<ul>*/}
-                                            {/*<li>*/}
-                                                {/*Put each*/}
-                                            {/*</li>*/}
-                                            {/*<li>*/}
-                                                {/*item in*/}
-                                            {/*</li>*/}
-                                            {/*<li>*/}
-                                                {/*a separate row*/}
-                                            {/*</li>*/}
-                                        {/*</ul>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="card mt-3">*/}
-                                {/*<div className="card-header">*/}
-                                    {/*<span className="nav">*/}
-                                        {/*<h4 className="widget-header">*/}
-                                            {/*Image widget*/}
-                                        {/*</h4>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="ml-2 float-right">*/}
-                                                {/*<select className="form-control mr-sm-2 float-right">*/}
-                                                    {/*<option value="HEADING">*/}
-                                                        {/*Heading*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LIST">*/}
-                                                        {/*List*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LINK">*/}
-                                                        {/*Link*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="IMAGE">*/}
-                                                        {/*Image*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="PARAGRAPH">*/}
-                                                        {/*Paragraph*/}
-                                                    {/*</option>*/}
-                                                {/*</select>*/}
-                                        {/*</span>*/}
-                                    {/*<span>*/}
-                                        {/*<FontAwesomeIcon icon="times-circle" color="red" size="2x"/>*/}
-                                    {/*</span>*/}
-                                    {/*</span>*/}
-                                {/*</div>*/}
-                                {/*<div className="card-body">*/}
-                                    {/*<input className="col-lg-12 form-control px-1" id="link"*/}
-                                           {/*placeholder="https://loremflickr.com/g/320/240/paris"/>*/}
-                                        {/*<input className="col-lg-12 form-control mt-2 px-1"*/}
-                                               {/*placeholder="Widget Name"/>*/}
-                                            {/*<h5 className="card-title mt-2">Preview</h5>*/}
-                                            {/*<img className="col-lg-8 mt-2"*/}
-                                                 {/*src="https://loremflickr.com/g/320/240/paris" alt=''/>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                            {/*<div className="card mt-3 mb-2">*/}
-                                {/*<div className="card-header">*/}
-                                    {/*<span className="nav">*/}
-                                        {/*<h4 className="widget-header">*/}
-                                            {/*Link widget*/}
-                                        {/*</h4>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="mr-2">*/}
-                                            {/*<FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>*/}
-                                        {/*</span>*/}
-                                        {/*<span className="ml-2 float-right">*/}
-                                                {/*<select className="form-control mr-sm-2 float-right">*/}
-                                                    {/*<option value="HEADING">*/}
-                                                        {/*Heading*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LIST">*/}
-                                                        {/*List*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="LINK">*/}
-                                                        {/*Link*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="IMAGE">*/}
-                                                        {/*Image*/}
-                                                    {/*</option>*/}
-                                                    {/*<option value="PARAGRAPH">*/}
-                                                        {/*Paragraph*/}
-                                                    {/*</option>*/}
-                                                {/*</select>*/}
-                                        {/*</span>*/}
-                                    {/*<span>*/}
-                                        {/*<FontAwesomeIcon icon="times-circle" color="red" size="2x"/>*/}
-                                    {/*</span>*/}
-                                    {/*</span>*/}
-                                {/*</div>*/}
-                                {/*<div className="card-body">*/}
-                                    {/*<input className="col-lg-12 form-control px-1" id="link1"*/}
-                                           {/*placeholder="https://loremflickr.com/g/320/240/paris"/>*/}
-                                        {/*<input className="col-lg-12 form-control mt-2 px-1"*/}
-                                               {/*placeholder="Link text"/>*/}
-                                            {/*<input className="col-lg-12 form-control mt-2 px-1"*/}
-                                                   {/*placeholder="Widget Name"/>*/}
-                                                {/*<h5 className="card-title mt-2">Preview</h5>*/}
-                                                {/*<a className="mt-2" href="https://loremflickr.com/g/320/240/paris">Link*/}
-                                                    {/*text</a>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        </div>
+                                    <select className="col-lg-12 form-control mt-2 px-1">
+                                        <option value="UN-ORL">
+                                            Unordered list
+                                        </option>
+                                        <option value="ORL">
+                                            Ordered list
+                                        </option>
+                                    </select>
+                                    <input className="col-lg-12 form-control mt-2 px-1"
+                                           placeholder="Widget Name"/>
+                                        <h5 className="card-title mt-2">Preview</h5>
+                                        <ul>
+                                            <li>
+                                                Put each
+                                            </li>
+                                            <li>
+                                                item in
+                                            </li>
+                                            <li>
+                                                a separate row
+                                            </li>
+                                        </ul>
+                                </div>
+                            </div>
+                            <div className="card mt-3">
+                                <div className="card-header">
+                                    <span className="nav">
+                                        <h4 className="widget-header">
+                                            Image widget
+                                        </h4>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="ml-2 float-right">
+                                                <select className="form-control mr-sm-2 float-right">
+                                                    <option value="HEADING">
+                                                        Heading
+                                                    </option>
+                                                    <option value="LIST">
+                                                        List
+                                                    </option>
+                                                    <option value="LINK">
+                                                        Link
+                                                    </option>
+                                                    <option value="IMAGE">
+                                                        Image
+                                                    </option>
+                                                    <option value="PARAGRAPH">
+                                                        Paragraph
+                                                    </option>
+                                                </select>
+                                        </span>
+                                    <span>
+                                        <FontAwesomeIcon icon="times-circle" color="red" size="2x"/>
+                                    </span>
+                                    </span>
+                                </div>
+                                <div className="card-body">
+                                    <input className="col-lg-12 form-control px-1" id="link"
+                                           placeholder="https://loremflickr.com/g/320/240/paris"/>
+                                        <input className="col-lg-12 form-control mt-2 px-1"
+                                               placeholder="Widget Name"/>
+                                            <h5 className="card-title mt-2">Preview</h5>
+                                            <img className="col-lg-8 mt-2"
+                                                 src="https://loremflickr.com/g/320/240/paris" alt=''/>
+                                </div>
+                            </div>
+                            <div className="card mt-3 mb-2">
+                                <div className="card-header">
+                                    <span className="nav">
+                                        <h4 className="widget-header">
+                                            Link widget
+                                        </h4>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-up" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="mr-2">
+                                            <FontAwesomeIcon icon="arrow-alt-circle-down" color="orange" size="2x"/>
+                                        </span>
+                                        <span className="ml-2 float-right">
+                                                <select className="form-control mr-sm-2 float-right">
+                                                    <option value="HEADING">
+                                                        Heading
+                                                    </option>
+                                                    <option value="LIST">
+                                                        List
+                                                    </option>
+                                                    <option value="LINK">
+                                                        Link
+                                                    </option>
+                                                    <option value="IMAGE">
+                                                        Image
+                                                    </option>
+                                                    <option value="PARAGRAPH">
+                                                        Paragraph
+                                                    </option>
+                                                </select>
+                                        </span>
+                                    <span>
+                                        <FontAwesomeIcon icon="times-circle" color="red" size="2x"/>
+                                    </span>
+                                    </span>
+                                </div>
+                                <div className="card-body">
+                                    <input className="col-lg-12 form-control px-1" id="link1"
+                                           placeholder="https://loremflickr.com/g/320/240/paris"/>
+                                        <input className="col-lg-12 form-control mt-2 px-1"
+                                               placeholder="Link text"/>
+                                            <input className="col-lg-12 form-control mt-2 px-1"
+                                                   placeholder="Widget Name"/>
+                                                <h5 className="card-title mt-2">Preview</h5>
+                                                <a className="mt-2" href="https://loremflickr.com/g/320/240/paris">Link
+                                                    text</a>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>

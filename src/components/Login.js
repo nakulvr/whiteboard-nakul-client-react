@@ -35,12 +35,12 @@ export default class Login extends Component {
                 {/*</nav>*/}
                 <span>
                     <div className="col-3">
-                        <label htmlFor="text" className="my-2"><h4> Username </h4></label>
-                        <input className="form-control mb-2" type="text"
+                        <label htmlFor="text" className="mt-2"><h4> Username </h4></label>
+                        <input className="form-control" type="text"
                                placeholder="username" aria-label="Search"
                                onChange={this.usernameChanged}/>
-                        <label htmlFor="text" className="my-2"><h4> Password </h4></label>
-                        <input className="form-control mb-2" type="password"
+                        <label htmlFor="text" className="mt-2"><h4> Password </h4></label>
+                        <input className="form-control" type="password"
                                placeholder="password" aria-label="Search"
                                    onChange={this.passwordChanged}/>
                         <button type="button" className="btn btn-primary my-3"

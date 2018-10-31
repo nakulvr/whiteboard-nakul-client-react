@@ -22,128 +22,206 @@ export default class WhiteBoard extends React.Component {
     }
 
     componentDidMount() {
-        CourseServiceSingleton.findAllCourses2(this.props.userId).then(courses => this.setState({
+        CourseServiceSingleton.findAllCourses(this.props.userId).then(courses => this.setState({
             courses : courses
         }));
     }
 
-    addCourse = newCourse => {
+    componentDidUpdate(prevProps) {
+    if(prevProps.userId !== this.props.userId){
+        CourseServiceSingleton.findAllCourses(this.props.userId)
+            .then(courses => this.setState({
+            courses : courses}));
+        }
+    }
+
+    addCourse = (newCourse) => {
         // this.courseService.createCourse(newCourse);
-        CourseServiceSingleton.createCourse(newCourse);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        CourseServiceSingleton.createCourse(this.props.userId, newCourse)
+            .then(courses => this.setState({
+            courses : courses}));
     };
 
     deleteCourse = courseToDelete => {
         // this.courseService.deleteCourse(courseToDelete.id);
-        CourseServiceSingleton.deleteCourse(courseToDelete.id);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        // CourseServiceSingleton.deleteCourse(courseToDelete.id);
+        // this.setState({
+        //     // courses: this.courseService.findAllCourses()
+        //     courses: CourseServiceSingleton.findAllCourses()
+        // })
+        CourseServiceSingleton.deleteCourse(this.props.userId, courseToDelete.id)
+            .then(courses => this.setState({
+                courses : courses}));
     };
 
-    deleteModule = module => {
+    deleteModule = (courseId, module) => {
         // this.courseService.deleteModule(module);
-        CourseServiceSingleton.deleteModule(module);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        CourseServiceSingleton.deleteModule(this.props.userId, courseId, module)
+            .then(courses => this.setState({
+                courses : courses
+            }));
+        // this.setState({
+        //     // courses: this.courseService.findAllCourses()
+        //     courses: CourseServiceSingleton.findAllCourses()
+        // })
     };
 
-    deleteLesson = lesson => {
+    deleteLesson = (courseId, moduleId, lesson) => {
       // this.courseService.deleteLesson(lesson);
-      CourseServiceSingleton.deleteLesson(lesson);
-      this.setState({
-            // courses: this.courseService.findAllCourses()
-          courses: CourseServiceSingleton.findAllCourses()
-      })
+      CourseServiceSingleton.deleteLesson(this.props.userId, courseId, moduleId, lesson)
+          .then(courses => this.setState({
+              courses: courses
+          }));
     };
 
-    deleteTopic = topic => {
+    deleteTopic = (courseId, moduleId, lessonId, topic) => {
       // this.courseService.deleteTopic(topic);
-        CourseServiceSingleton.deleteTopic(topic);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        CourseServiceSingleton.deleteTopic(this.props.userId, courseId,
+            moduleId, lessonId, topic)
+            .then(courses => this.setState({
+                courses: courses
+            }));
     };
 
-    addModule = (courseId, module) => {
+    addModule = (courseId, moduleTitle) => {
       // this.courseService.addModule(courseId, module);
-        CourseServiceSingleton.addModule(courseId, module);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+      //   CourseServiceSingleton.addModule(courseId, module);
+      //   this.setState({
+      //       // courses: this.courseService.findAllCourses()
+      //       courses: CourseServiceSingleton.findAllCourses()
+      //   })
+        let module;
+        if(moduleTitle === '') {
+            module = {
+                title: "New Module",
+                lessons: [{
+                    "title": "New Lesson",
+                    "topics": [
+                        {
+                            "title": "New Topic",
+                            "widgets": []
+                        }
+                    ]
+                }]
+            }
+        }
+        else {
+            module = {
+                title: moduleTitle,
+                lessons: [{
+                    "title": "New Lesson",
+                    "topics": [
+                        {
+                            "title": "New Topic",
+                            "widgets": []
+                        }
+                    ]
+                }]
+            }
+        }
+        CourseServiceSingleton.addModule(this.props.userId, courseId, module)
+            .then(courses => {
+                this.setState({courses : courses})});
     };
 
-    addLesson = (courseId, moduleId, lesson) => {
+    addLesson = (courseId, moduleId, lessonTitle) => {
       // this.courseService.addLesson(courseId, moduleId, lesson);
-        CourseServiceSingleton.addLesson(courseId, moduleId, lesson);
-      this.setState({
-          // courses: this.courseService.findAllCourses()
-          courses: CourseServiceSingleton.findAllCourses()
-      })
+        let lesson;
+        if(lessonTitle === ''){
+          lesson =  {
+                "title": "New Lesson",
+                "topics": [
+                {
+                    "title": "New Topic",
+                    "widgets": []
+                }
+            ]
+            }
+        }
+        else {
+            lesson = {
+                "title": lessonTitle,
+                "topics": [
+                {
+                    "title": "New Topic",
+                    "widgets": []
+                }
+            ]
+            }
+        }
+        CourseServiceSingleton.addLesson(this.props.userId, courseId, moduleId, lesson)
+            .then(courses => this.setState({
+                courses: courses
+            }));
+      // this.setState({
+      //     // courses: this.courseService.findAllCourses()
+      //     courses: CourseServiceSingleton.findAllCourses()
+      // })
     };
 
-    addTopic = (lesson, topicToAdd) => {
+    addTopic = (courseId, moduleId, lessonId, topicTitle) => {
         // this.courseService.addTopic(lesson, topicToAdd);
-        CourseServiceSingleton.addTopic(lesson, topicToAdd);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        let topic;
+        if(topicTitle === '') {
+            topic = {
+                "title": "New Topic",
+                "widgets": []
+            }
+        }
+        else{
+            topic = {
+                "title": topicTitle,
+                "widgets": []
+            }
+        }
+        CourseServiceSingleton.addTopic(this.props.userId, courseId,
+            moduleId, lessonId, topic)
+            .then(courses => this.setState({
+                courses: courses
+            }));
     };
 
-    updateModuleTitle = (courseId, moduleId, module) => {
+    updateModuleTitle = (courseId, module, newTitle) => {
       // this.courseService.updateModuleTitle(courseId, moduleId, module);
-      CourseServiceSingleton.updateModuleTitle(courseId, moduleId, module);
-      this.setState({
-          // courses: this.courseService.findAllCourses()
-          courses: CourseServiceSingleton.findAllCourses()
-      })
+        if(newTitle === '')
+            newTitle = 'New Module';
+        module.title = newTitle;
+        CourseServiceSingleton.updateModuleTitle(this.props.userId, courseId, module)
+          .then(courses => this.setState({
+              courses : courses
+          }));
+      // this.setState({
+      //     // courses: this.courseService.findAllCourses()
+      //     courses: CourseServiceSingleton.findAllCourses()
+      // })
     };
 
-    updateLessonTitle = (courseId, moduleId, lessonId, lesson) => {
+    updateLessonTitle = (courseId, moduleId, lesson, newTitle) => {
         // this.courseService.updateLessonTitle(courseId, moduleId, lessonId, lesson);
-        CourseServiceSingleton.updateLessonTitle(courseId, moduleId, lessonId, lesson);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        if(newTitle === '')
+            newTitle = 'New Lesson';
+        lesson.title = newTitle;
+        CourseServiceSingleton.updateLessonTitle(this.props.userId, courseId, moduleId, lesson)
+            .then(courses => this.setState({
+                courses : courses
+            }));
     };
 
-    updateTopicTitle = (topic, newTopicTitle) => {
+    updateTopicTitle = (courseId, moduleId, lessonId, topic, newTopicTitle) => {
         // this.courseService.updateTopicTitle(topic, newTopicTitle);
-        CourseServiceSingleton.updateTopicTitle(topic, newTopicTitle);
-        this.setState({
-            // courses: this.courseService.findAllCourses()
-            courses: CourseServiceSingleton.findAllCourses()
-        })
+        if(newTopicTitle === '')
+            newTopicTitle = 'New Topic';
+        topic.title = newTopicTitle;
+        CourseServiceSingleton.updateTopicTitle(this.props.userId, courseId,
+            moduleId, lessonId, topic)
+            .then(courses => this.setState({
+                courses : courses
+            }));
     };
 
     render() {
         return(
           <div>
-              {/*<h1>WhiteBoard ({this.state.courses.length})</h1>*/}
-              {/*<nav className="navbar navbar-dark bg-primary">*/}
-                  {/*<FontAwesomeIcon icon="bars" color="white"/>*/}
-                  {/*<a className="navbar-brand justify-content-center" href="../../public/index.html">Course Manager</a>*/}
-                  {/*<form className="form-inline">*/}
-                      {/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>*/}
-                          {/*/!*<button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>*!/*/}
-                      {/*/!*<span className="fa-layers fa-fw">*!/*/}
-                          {/*/!*<FontAwesomeIcon icon={faCircle} size='2x' color="red"/>*!/*/}
-                          {/*/!*<FontAwesomeIcon icon={faPlus} size='2x' inverse={true}/>*!/*/}
-                      {/*/!*</span>*!/*/}
-                      {/*<FontAwesomeIcon icon="plus-circle" size='2x' inverse={true}/>*/}
-                  {/*</form>*/}
-              {/*</nav>*/}
-              {/*<CourseTable courses={this.state.courses}/>*/}
               <Router>
                   <div>
                       <ul className="nav justify-content-center my-2">
@@ -175,7 +253,6 @@ export default class WhiteBoard extends React.Component {
                                 addModule={this.addModule}
                                 deleteModule={this.deleteModule}
                                 courses={this.state.courses}
-                                findCourse={CourseServiceSingleton.findCourseById}
                                 updateModuleTitle={this.updateModuleTitle}
                                 addLesson={this.addLesson}
                                 deleteLesson={this.deleteLesson}
@@ -189,18 +266,6 @@ export default class WhiteBoard extends React.Component {
                       />
                   </div>
               </Router>
-
-              {/*<ModuleList/>*/}
-              {/*<div className="card-deck">*/}
-                  {/*{*/}
-                      {/*// just one argument no need of parenthesis*/}
-                      {/*this.props.courses.map((course, index) => (*/}
-                           {/*<CourseCard*/}
-                               {/*key={index}*/}
-                               {/*title={course.title}/>*/}
-                      {/*))*/}
-                  {/*}*/}
-              {/*</div>*/}
           </div>
         );
     }
