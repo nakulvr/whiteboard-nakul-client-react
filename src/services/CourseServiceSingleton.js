@@ -2,6 +2,8 @@
 //     .then(response => response.json());
 let courses = require('../courses.json');
 let COURSE_API_URL = "http://localhost:8080/api/user/";
+let COURSE_API_URL ="https://whiteboard-nakul-server-java.herokuapp.com/api/user/";
+
 export default class CourseServiceSingleton {
     // static createCourse = course =>
     //     courses.push(course);
