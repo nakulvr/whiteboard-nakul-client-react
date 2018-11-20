@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWidgetUp, checked}) => {
+const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWidgetUp, checked, topicId}) => {
     let text;
     let ordered;
     let widgetType;
@@ -31,9 +31,10 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                                     onChange={() => {
                                         let w = {
                                             id: widget.id,
-                                            type: widgetType.value
+                                            type: widgetType.value,
+                                            title: widget.title
                                         };
-                                        updateWidget(w)
+                                        updateWidget(topicId, w)
                                     }}
                                     ref={node => widgetType = node}>
                                 <option value="LIST">
@@ -106,7 +107,7 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                 }
                 {!widget.ordered &&
                 <ul>
-                    { widget.items !== undefined && widget.items.split('\n').map((item, index) =>
+                    { widget.items !== undefined && widget.items !== null && widget.items.split(',').map((item, index) =>
                         (<li key={index}>{item} </li>))
                     }
 
@@ -114,7 +115,7 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                 }
                 {widget.ordered &&
                 <ol>
-                    {widget.items !== undefined && widget.items.split(',').map((item, index) =>
+                    {widget.items !== undefined && widget.items !== null && widget.items.split(',').map((item, index) =>
                         (<li key={index}>{item} </li>))
                     }
                 </ol>

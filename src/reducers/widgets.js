@@ -2,13 +2,17 @@ import CourseServiceSingleton from '../services/CourseServiceSingleton'
 
 const widgets = (state = {widgets:[]}, action) => {
   switch (action.type) {
-      case "INIT":
-          // console.log(action);
-          return {
-              // widgets: action.courseService.findWidgetsForTopic(action.topic),
-              widgets: CourseServiceSingleton.findWidgetsForTopic(action.topic),
-              selectedTopic: action.topic
-              // courseService: action.courseService
+      // case "INIT":
+      //     // console.log(action);
+      //     return {
+      //         // widgets: action.courseService.findWidgetsForTopic(action.topic),
+      //         widgets: CourseServiceSingleton.findWidgetsForTopic(action.topic),
+      //         selectedTopic: action.topic
+      //         // courseService: action.courseService
+      //     };
+      case 'LOAD_WIDGETS':
+          return{
+            widgets: action.widgets
           };
       case "DELETE_WIDGET":
           // console.log(state);

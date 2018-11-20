@@ -10,17 +10,31 @@ import LinkWidget from "./LinkWidget";
 class WidgetList extends React.Component {
     constructor(props) {
         super(props);
-        props.init(props.widgetsInit, props.topic, props.checked)
+        // props.init(props.widgetsInit, props.topic, props.checked)
+        this.state = {
+            widgets: []
+        }
+    }
+    componentDidMount(){
+        this.props.loadWidgets(
+            this.props.topic.id
+        )
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         // this.props.init(this.props.widgetsInit)
         // console.log(this.props);
-        this.props.init(this.props.widgetsInit, this.props.topic, this.props.checked)
+        if(this.props.topic.id !== prevProps.topic.id) {
+            // this.props.init(this.props.widgetsInit, this.props.topic, this.props.checked)
+            this.props.loadWidgets(
+                this.props.topic.id
+            )
+        }
     }
 
     render() {
         // console.log(this.props);
+        // console.log(this.state.widgets);
         return (
             <span
                 // className="list-group"
@@ -56,6 +70,7 @@ class WidgetList extends React.Component {
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
+                            topicId={this.props.topic.id}
                         /> }
                         {widget.type === "PARAGRAPH" &&
                         <ParagraphWidget
@@ -65,6 +80,7 @@ class WidgetList extends React.Component {
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
+                            topicId={this.props.topic.id}
                         /> }
                         {widget.type === "LIST" &&
                         <ListWidget
@@ -74,6 +90,7 @@ class WidgetList extends React.Component {
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
+                            topicId={this.props.topic.id}
                         /> }
                         {widget.type === "IMAGE" &&
                         <ImageWidget
@@ -83,6 +100,7 @@ class WidgetList extends React.Component {
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
+                            topicId={this.props.topic.id}
                         /> }
                         {widget.type === "LINK" &&
                         <LinkWidget
@@ -92,6 +110,7 @@ class WidgetList extends React.Component {
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
+                            topicId={this.props.topic.id}
                         /> }
                         </td>
                     </tr>

@@ -13,24 +13,72 @@ const stateToPropertyMapper = state => {
 };
 
 const dispatcherToPropertyMapper = dispatch => ({
-   init: (widget, topic) => dispatch({
-       type: 'INIT',
-       widgets: widget,
-       topic: topic,
-       // courseService: courseService
-   }),
-   deleteWidget: (widget) => dispatch({
-       type: 'DELETE_WIDGET',
-       widget: widget
-   }),
-   updateWidget: widget => dispatch({
-       type: 'UPDATE_WIDGET',
-       widget: widget
-   }),
-    addWidget: (topic) => dispatch({
-      type: 'CREATE_WIDGET',
-      topic: topic
-    }),
+    loadWidgets: (topicId) => {
+        let url = "http://localhost:8080/api/topic/"+ topicId + "/widget";
+        // console.log(url);
+        fetch(url)
+            .then(response => response.json())
+            .then(widgets => dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
+   // init: (widget, topic) => dispatch({
+   //     type: 'INIT',
+   //     widgets: widget,
+   //     topic: topic,
+   //     // courseService: courseService
+   // }),
+   // deleteWidget: (widget) => dispatch({
+   //     type: 'DELETE_WIDGET',
+   //     widget: widget
+   // }),
+    deleteWidget: (widget) => {
+        let url = "http://localhost:8080/api/widget/" + widget.id;
+        fetch(url,
+            {method : 'DELETE'})
+            .then(response => response.json())
+            .then(widgets => dispatch({
+                type: 'LOAD_WIDGETS',
+                widgets: widgets
+                })
+            )
+    },
+   // updateWidget: widget => dispatch({
+   //     type: 'UPDATE_WIDGET',
+   //     widget: widget
+   // }),
+    updateWidget: (topicId, widget) => {
+        let url = 'http://localhost:8080/api/topic/'+ topicId +'/widget/' + widget.id;
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(widget),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+            dispatch({
+                type: 'LOAD_WIDGETS',
+                widgets: widgets
+            })
+        )
+    },
+    addWidget: (topic) => {
+        let url = "http://localhost:8080/api/topic/" + topic.id +"/widget";
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                "title": "Heading"
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+                dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
     moveWidgetUp: widget => dispatch({
         type: 'MOVE_WIDGET_UP',
         widget: widget

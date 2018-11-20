@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const LinkWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidgetDown, checked}) => {
+const LinkWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
     let text;
     // let size = widget.size;
     let widgetType;
@@ -31,9 +31,10 @@ const LinkWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidge
                                         onChange={() => {
                                             let w = {
                                                 id: widget.id,
-                                                type: widgetType.value
+                                                type: widgetType.value,
+                                                title: widget.title
                                             };
-                                            updateWidget(w)
+                                            updateWidget(topicId, w)
                                         }}
                                         ref={node => widgetType = node}>
                                     <option value="LINK">

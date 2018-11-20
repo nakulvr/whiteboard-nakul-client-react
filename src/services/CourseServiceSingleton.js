@@ -1,8 +1,9 @@
 // let courses = fetch("../courses.json")
 //     .then(response => response.json());;
 let courses = require('../courses.json');
-// let COURSE_API_URL = "http://localhost:8080/api/user/";
-let COURSE_API_URL ="https://whiteboard-nakul-server-java.herokuapp.com/api/user/";
+let COURSE_API_URL = "http://localhost:8080/api/user/";
+// let WIDGET_API_URL = "http://localhost:8080/api/widget/";
+// let COURSE_API_URL ="https://whiteboard-nakul-server-java.herokuapp.com/api/user/";
 
 export default class CourseServiceSingleton {
     // static createCourse = course =>
@@ -364,7 +365,11 @@ export default class CourseServiceSingleton {
             }
         }
     };
-
+    // static deleteWidget = (forTopic, forWidget) => {
+    //     fetch(WIDGET_API_URL + forWidget, {
+    //         method : 'DELETE'
+    //     }).then(response => response.json());
+    // };
     static deleteWidget = (forTopic, forWidget) => {
         for(let c in courses){
             for(let m in courses[c].modules) {
