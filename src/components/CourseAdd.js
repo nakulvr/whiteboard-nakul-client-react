@@ -33,6 +33,7 @@ export default class CourseAdd extends Component{
                                 "topics": [
                                     {
                                         // id: (new Date()).getTime() + '',
+                                        id: 1,
                                         "title": "New Topic",
                                         "widgets": []
                                     }
