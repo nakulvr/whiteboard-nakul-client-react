@@ -1,5 +1,5 @@
-let API_URL = "http://localhost:8080/api";
-// let API_URL = "https://whiteboard-nakul-server-java.herokuapp.com/api";
+// let API_URL = "http://localhost:8080/api";
+let API_URL = "https://whiteboard-nakul-server-java.herokuapp.com/api";
 export default class UserServiceSingleton {
 
     static userLogin = user => {
