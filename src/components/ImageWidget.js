@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const ImageWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
+const ImageWidget = ({widget, deleteWidget, updateWidget, updateImageWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
     let text;
     // let size = widget.size;
     let widgetType;
@@ -19,7 +19,7 @@ const ImageWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidg
                         <span className="mr-2">
                             <button className="btn btn-warning"
                                     id="moveUp"
-                                    onClick={() => moveWidgetUp(widget)}
+                                    onClick={() => moveWidgetUp(topicId, widget)}
                             >
                                 <FontAwesomeIcon icon="arrow-up" size="1x"/>
                             </button>
@@ -27,7 +27,7 @@ const ImageWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidg
                         <span className="mr-2">
                             <button className="btn btn-warning"
                                     id="moveDown"
-                                    onClick={() => moveWidgetDown(widget)}
+                                    onClick={() => moveWidgetDown(topicId, widget)}
                             >
                                 <FontAwesomeIcon icon="arrow-down" size="1x"/>
                             </button>
@@ -76,7 +76,7 @@ const ImageWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidg
                            placeholder="Image link"
                            onChange={() => {
                                widget.src = text.value;
-                               updateWidget(widget)
+                               updateImageWidget(topicId, widget)
                            }
                            }
                            ref={node => text = node}
@@ -89,7 +89,7 @@ const ImageWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidg
                            ref={(node)=>widgetName=node}
                            onChange={()=>{
                                widget.title=widgetName.value;
-                               updateWidget(widget);
+                               updateImageWidget(topicId, widget);
                            }}
                            id='widgetNameText'
                            value={widget.title}

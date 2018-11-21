@@ -14,7 +14,7 @@ const stateToPropertyMapper = state => {
 
 const dispatcherToPropertyMapper = dispatch => ({
     loadWidgets: (topicId) => {
-        let url = "http://localhost:8080/api/topic/"+ topicId + "/widget";
+        let url = "https://whiteboard-nakul-server-java.herokuapp.com/api/topic/"+ topicId + "/widget";
         // console.log(url);
         fetch(url)
             .then(response => response.json())
@@ -35,7 +35,7 @@ const dispatcherToPropertyMapper = dispatch => ({
    //     widget: widget
    // }),
     deleteWidget: (widget) => {
-        let url = "http://localhost:8080/api/widget/" + widget.id;
+        let url = "https://whiteboard-nakul-server-java.herokuapp.com/api/widget/" + widget.id;
         fetch(url,
             {method : 'DELETE'})
             .then(response => response.json())
@@ -50,7 +50,7 @@ const dispatcherToPropertyMapper = dispatch => ({
    //     widget: widget
    // }),
     updateWidget: (topicId, widget) => {
-        let url = 'http://localhost:8080/api/topic/'+ topicId +'/widget/' + widget.id;
+        let url = 'https://whiteboard-nakul-server-java.herokuapp.com/api/topic/'+ topicId +'/widget/' + widget.id;
         fetch(url, {
             method: "PUT",
             body: JSON.stringify(widget),
@@ -63,8 +63,78 @@ const dispatcherToPropertyMapper = dispatch => ({
             })
         )
     },
+    updateHeadingWidget: (topicId, widget) => {
+        let url = 'https://whiteboard-nakul-server-java.herokuapp.com/api/topic/'+ topicId +'/heading/widget/' + widget.id;
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(widget),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+                dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
+    updateImageWidget: (topicId, widget) => {
+        let url = 'https://whiteboard-nakul-server-java.herokuapp.com/api/topic/'+ topicId +'/image/widget/' + widget.id;
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(widget),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+                dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
+    updateLinkWidget: (topicId, widget) => {
+        let url = 'https://whiteboard-nakul-server-java.herokuapp.com/api/topic/'+ topicId +'/link/widget/' + widget.id;
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(widget),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+                dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
+    updateListWidget: (topicId, widget) => {
+        let url = 'https://whiteboard-nakul-server-java.herokuapp.com/api/topic/'+ topicId +'/list/widget/' + widget.id;
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(widget),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+                dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
+    updateParagraphWidget: (topicId, widget) => {
+        let url = 'https://whiteboard-nakul-server-java.herokuapp.com/api/topic/'+ topicId +'/paragraph/widget/' + widget.id;
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(widget),
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => response.json())
+            .then(widgets =>
+                dispatch({
+                    type: 'LOAD_WIDGETS',
+                    widgets: widgets
+                })
+            )
+    },
     addWidget: (topic) => {
-        let url = "http://localhost:8080/api/topic/" + topic.id +"/widget";
+        let url = "https://whiteboard-nakul-server-java.herokuapp.com/api/topic/" + topic.id +"/widget";
         fetch(url, {
             method: "POST",
             body: JSON.stringify({
@@ -79,14 +149,30 @@ const dispatcherToPropertyMapper = dispatch => ({
                 })
             )
     },
-    moveWidgetUp: widget => dispatch({
-        type: 'MOVE_WIDGET_UP',
-        widget: widget
-    }),
-    moveWidgetDown: widget => dispatch({
-        type: 'MOVE_WIDGET_DOWN',
-        widget: widget
-    })
+    moveWidgetUp: (topicId, widget) => {
+        let url = "https://whiteboard-nakul-server-java.herokuapp.com/api/topic/"+ topicId + "/widget";
+        // console.log(url);
+        fetch(url)
+            .then(response => response.json())
+            .then(widgets => dispatch({
+                type: 'MOVE_WIDGET_UP',
+                widgets: widgets,
+                widget: widget
+                })
+            )
+    },
+    moveWidgetDown: (topicId, widget) => {
+        let url = "https://whiteboard-nakul-server-java.herokuapp.com/api/topic/"+ topicId + "/widget";
+        // console.log(url);
+        fetch(url)
+            .then(response => response.json())
+            .then(widgets => dispatch({
+                    type: 'MOVE_WIDGET_DOWN',
+                    widgets: widgets,
+                    widget: widget
+                })
+            )
+    }
 });
 
 const WidgetListContainer = connect(stateToPropertyMapper, dispatcherToPropertyMapper)(WidgetList);

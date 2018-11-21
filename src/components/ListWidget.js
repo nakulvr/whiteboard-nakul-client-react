@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWidgetUp, checked, topicId}) => {
+const ListWidget = ({widget, deleteWidget, updateWidget, updateListWidget, moveWidgetDown, moveWidgetUp, checked, topicId}) => {
     let text;
     let ordered;
     let widgetType;
@@ -17,7 +17,7 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                         {widget.title}
                     </h4>
                     <span className="mr-2">
-                        <button className="btn btn-warning" id="moveUp" onClick={() => moveWidgetUp(widget)}>
+                        <button className="btn btn-warning" id="moveUp" onClick={() => moveWidgetUp(topicId, widget)}>
                             <FontAwesomeIcon icon="arrow-up" size="1x"/>
                         </button>
                     </span>
@@ -71,7 +71,7 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                               onChange={() => {
                                   widget.text = '';
                                   widget.items = text.value;
-                                  updateWidget(widget)
+                                  updateListWidget(topicId, widget)
                               }
                               }
                               ref={node => text = node}
@@ -84,7 +84,7 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                            ref={(node) => widgetName = node}
                            onChange={() => {
                                widget.title = widgetName.value;
-                               updateWidget(widget);
+                               updateListWidget(topicId, widget);
                            }}
                            id='widgetNameText'
                            value={widget.title}
@@ -96,7 +96,7 @@ const ListWidget = ({widget, deleteWidget, updateWidget, moveWidgetDown, moveWid
                         <input ref={node => ordered = node}
                                onClick={() => {
                                    widget.ordered = ordered.checked;
-                                   updateWidget(widget);
+                                   updateListWidget(topicId, widget);
                                }
                                } checked={widget.ordered}
                                type="checkbox"

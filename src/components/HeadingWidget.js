@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
+const HeadingWidget = ({widget, deleteWidget, updateWidget, updateHeadingWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
     let text;
     let size = "1";
     let widgetType;
@@ -18,12 +18,12 @@ const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWi
                         {widget.title}
                     </h4>
                     <span className="mr-2">
-                        <button className="btn btn-warning" id="moveUp" onClick={() => moveWidgetUp(widget)}>
+                        <button className="btn btn-warning" id="moveUp" onClick={() => moveWidgetUp(topicId, widget)}>
                             <FontAwesomeIcon icon="arrow-up" size="1x"/>
                         </button>
                     </span>
                     <span className="mr-2">
-                        <button className="btn btn-warning" id="moveDown" onClick={() => moveWidgetDown(widget)}>
+                        <button className="btn btn-warning" id="moveDown" onClick={() => moveWidgetDown(topicId, widget)}>
                             <FontAwesomeIcon icon="arrow-down" size="1x"/>
                         </button>
                     </span>
@@ -74,7 +74,7 @@ const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWi
                                 if(!widget.size){
                                     widget.size = '1'
                                 }
-                            updateWidget(widget)}}
+                            updateHeadingWidget(topicId, widget)}}
                             ref={node => text = node}
                             value={widget.text}/>
                         <label htmlFor="size" className="mt-2">Heading Size</label>
@@ -82,7 +82,7 @@ const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWi
                         onChange={()=>{
                             // console.log(size.value);
                             widget.size=size.value;
-                        updateWidget(widget)}}
+                        updateHeadingWidget(topicId, widget)}}
                         ref={node => size = node} id='size'
                         value={widget.size}
                         >
@@ -105,7 +105,7 @@ const HeadingWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWi
                         ref={(node)=>widgetName=node}
                         onChange={()=>{
                         widget.title=widgetName.value;
-                        updateWidget(widget);
+                        updateHeadingWidget(topicId, widget);
                     }}
                         id='widgetNameText'
                         value={widget.title}

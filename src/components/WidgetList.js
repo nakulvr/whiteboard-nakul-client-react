@@ -67,6 +67,7 @@ class WidgetList extends React.Component {
                             widget={widget}
                             deleteWidget={this.props.deleteWidget}
                             updateWidget={this.props.updateWidget}
+                            updateHeadingWidget={this.props.updateHeadingWidget}
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
@@ -77,6 +78,7 @@ class WidgetList extends React.Component {
                             widget={widget}
                             deleteWidget={this.props.deleteWidget}
                             updateWidget={this.props.updateWidget}
+                            updateParagraphWidget={this.props.updateParagraphWidget}
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
@@ -87,6 +89,7 @@ class WidgetList extends React.Component {
                             widget={widget}
                             deleteWidget={this.props.deleteWidget}
                             updateWidget={this.props.updateWidget}
+                            updateListWidget={this.props.updateListWidget}
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
@@ -97,6 +100,7 @@ class WidgetList extends React.Component {
                             widget={widget}
                             deleteWidget={this.props.deleteWidget}
                             updateWidget={this.props.updateWidget}
+                            updateImageWidget={this.props.updateImageWidget}
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}
@@ -107,6 +111,7 @@ class WidgetList extends React.Component {
                             widget={widget}
                             deleteWidget={this.props.deleteWidget}
                             updateWidget={this.props.updateWidget}
+                            updateLinkWidget={this.props.updateLinkWidget}
                             moveWidgetUp={this.props.moveWidgetUp}
                             moveWidgetDown={this.props.moveWidgetDown}
                             checked={this.props.checked}

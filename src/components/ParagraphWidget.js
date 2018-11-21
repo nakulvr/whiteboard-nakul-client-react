@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const ParagraphWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
+const ParagraphWidget = ({widget, deleteWidget, updateWidget, updateParagraphWidget, moveWidgetUp, moveWidgetDown, checked, topicId}) => {
     let text;
     // let size = widget.size;
     let widgetType;
@@ -17,12 +17,12 @@ const ParagraphWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, move
                         {widget.title}
                     </h4>
                     <span className="mr-2">
-                        <button className="btn btn-warning" id="moveUp" onClick={() => moveWidgetUp(widget)}>
+                        <button className="btn btn-warning" id="moveUp" onClick={() => moveWidgetUp(topicId, widget)}>
                             <FontAwesomeIcon icon="arrow-up" size="1x"/>
                         </button>
                     </span>
                     <span className="mr-2">
-                        <button className="btn btn-warning" id="moveDown" onClick={() => moveWidgetDown(widget)}>
+                        <button className="btn btn-warning" id="moveDown" onClick={() => moveWidgetDown(topicId, widget)}>
                             <FontAwesomeIcon icon="arrow-down" size="1x"/>
                         </button>
                     </span>
@@ -73,7 +73,7 @@ const ParagraphWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, move
                               placeholder="Paragraph text"
                               onChange={() => {
                                   widget.text = text.value;
-                                  updateWidget(widget)
+                                  updateParagraphWidget(topicId, widget)
                               }
                               }
                               ref={node => text = node}
@@ -86,7 +86,7 @@ const ParagraphWidget = ({widget, deleteWidget, updateWidget, moveWidgetUp, move
                            ref={(node) => widgetName = node}
                            onChange={() => {
                                widget.title = widgetName.value;
-                               updateWidget(widget);
+                               updateParagraphWidget(topicId, widget);
                            }}
                            id='widgetNameText'
                            value={widget.title}

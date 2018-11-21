@@ -40,16 +40,25 @@ const widgets = (state = {widgets:[]}, action) => {
             selectedTopic: state.selectedTopic
           };
       case "MOVE_WIDGET_UP":
-          CourseServiceSingleton.moveWidgetUp(state.selectedTopic, action.widget);
+          // CourseServiceSingleton.moveWidgetUp(state.selectedTopic, action.widget);
+          const index = action.widgets.findIndex(widget => widget.id === action.widget.id);
+          let temp = action.widgets[index];
+          action.widgets[index] = action.widgets[index - 1];
+          action.widgets[index - 1] = temp;
           return{
-              widgets: CourseServiceSingleton.findWidgetsForTopic(state.selectedTopic).slice(0),
-              selectedTopic: state.selectedTopic
+              // widgets: CourseServiceSingleton.findWidgetsForTopic(state.selectedTopic).slice(0),
+              // selectedTopic: state.selectedTopic
+              widgets: action.widgets
           };
       case "MOVE_WIDGET_DOWN":
-          CourseServiceSingleton.moveWidgetDown(state.selectedTopic, action.widget);
+          const index1 = action.widgets.findIndex(widget => widget.id === action.widget.id);
+          let temp1 = action.widgets[index1];
+          action.widgets[index1] = action.widgets[index1 + 1];
+          action.widgets[index1 + 1] = temp1;
           return{
-              widgets: CourseServiceSingleton.findWidgetsForTopic(state.selectedTopic).slice(0),
-              selectedTopic: state.selectedTopic
+              // widgets: CourseServiceSingleton.findWidgetsForTopic(state.selectedTopic).slice(0),
+              // selectedTopic: state.selectedTopic
+              widgets: action.widgets
           };
       case "FIND_WIDGET":
           return{
